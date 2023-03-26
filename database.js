@@ -16,7 +16,7 @@ export async function getCities() {
   return rows;
 }
 
-export async function getCity(id) {
+export async function getCityById(id) {
   const [rows] = await pool.query(
     `
     SELECT *
@@ -28,6 +28,20 @@ export async function getCity(id) {
   return rows[0];
 }
 
+export async function getCityByQuery(query) {
+  const keys = Object.keys(query);
+  const values = Object.values(query);
+
+  let sql = `SELECT * FROM cities WHERE ${keys[0]} LIKE ?`;
+
+  for (let i = 1; i < keys.length; i++) {
+    sql += ` AND ${keys[i]} LIKE ?`;
+  }
+
+  const [rows] = await pool.query(sql + ';', values);
+  return rows;
+}
+
 export async function createCity(city, country, code, time_zone) {
   const [result] = await pool.query(
     `
@@ -37,7 +51,7 @@ export async function createCity(city, country, code, time_zone) {
     [city, country, code, time_zone]
   );
   const id = result.insertId;
-  return getCity(id);
+  return getCityById(id);
 }
 
 // const cities = await getCities()
