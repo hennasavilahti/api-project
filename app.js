@@ -1,39 +1,21 @@
 import express from 'express';
-
-import {
-  getCities,
-  getCityById,
-  getCityByQuery,
-  createCity,
-} from './database.js';
+import City from './city.js';
+import sequelize from './database.js';
 
 const app = express();
 
 app.use(express.json());
 
 app.get('/cities', async (req, res) => {
-  let cities;
   try {
-    if (!Object.keys(req.query).length) {
-      cities = await getCities();
-    } else {
-      cities = await getCityByQuery(req.query);
-    }
-
-    if (cities) {
+    const cities = await City.findAll({
+      where: req.query,
+    });
+    if (cities.length) {
       res.status(200).send(cities);
+    } else {
+      res.status(404).send('Did not find any matching cities.');
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('ERROR');
-  }
-});
-
-app.get('/cities/:id', async (req, res) => {
-  const id = req.params.id;
-  try {
-    const city = await getCityById(id);
-    res.send(city);
   } catch (err) {
     console.log(err);
     res.status(500).send('ERROR');
@@ -41,16 +23,27 @@ app.get('/cities/:id', async (req, res) => {
 });
 
 app.post('/cities', async (req, res) => {
-  const { city, country, code, time_zone } = req.body;
   try {
-    const new_city = await createCity(city, country, code, time_zone);
-    res.status(201).send(new_city);
+    const city = await City.create(req.body);
+    if (city) {
+      res.status(201).send(city);
+    }
   } catch (err) {
-    console.log(err);
-    res.status(500).send('ERROR');
+    if (err.name === 'SequelizeValidationError') {
+      res.status(403).send(err.errors[0].message); // User error
+    } else {
+      res.status(500).send(err.message);
+    }
   }
 });
 
-app.listen(5000, () => {
-  console.log('Server is running on port 5000');
-});
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(5000, () => {
+      console.log('Server is running on port 5000');
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

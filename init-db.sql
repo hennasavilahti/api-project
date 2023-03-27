@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `cities` (
+CREATE TABLE IF NOT EXISTS `Cities` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`city` VARCHAR(50) NOT NULL,
 	`country` VARCHAR(50) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `cities` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `cities` (`city`, `country`, `code`, `time_zone`) VALUES
+INSERT INTO `Cities` (`city`, `country`, `code`, `time_zone`) VALUES
 ('Mariestad', 'Sweden', 'SE', 'Europe/Stockholm'),
 ('Reggio Calabria', 'Italy', 'IT', 'Europe/Rome'),
 ('Forshaga', 'Sweden', 'SE', 'Europe/Stockholm'),
@@ -38,3 +38,6 @@ INSERT INTO `cities` (`city`, `country`, `code`, `time_zone`) VALUES
 ('Storvik', 'Sweden', 'SE', 'Europe/Stockholm'),
 ('Norsborg', 'Sweden', 'SE', 'Europe/Stockholm'),
 ('Marumori', 'Japan', 'JP', 'Asia/Tokyo');
+
+
+asd
