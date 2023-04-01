@@ -2,9 +2,9 @@
 
 ## Course project for school's API course.
 
-#### Project was made using Nodejs and the assignment was to make it possible for client to send an URL request with search criteria parameter. Cities database includes data from randomised cities, such as name, country, country code and time zone. Results are returned from the database that's running on Docker.
+Project was made using Nodejs and the assignment was to make it possible for client to send an URL request with search criteria parameter. Cities database includes data from randomised cities, such as name, country, country code and time zone. Results are returned from the database that's running on Docker.
 
-#### Grading of the project was from 1-3 and this project represents grade 3. Criteria for this grade is listed below:
+Grading of the project was from 1-3 and this project represents grade 3. Criteria for this grade is listed below:
 
 #### Nodejs project that implements a service using:
 
