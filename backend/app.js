@@ -1,6 +1,6 @@
 import express from 'express';
-import City from './city.js';
-import sequelize from './database.js';
+import City from './models/city.js';
+import sequelize from './db/database.js';
 
 const app = express();
 
